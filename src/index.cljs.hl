@@ -1,13 +1,8 @@
 (page "index.html"
       (:require [stub-page]))
 
-(defn replace-article-body [elem]
-  (.html (js/jQuery elem) @stub-page/article-body))
-
-(defn find-and-replace-article-body []
-  (replace-article-body (.first (js/jQuery "#article-body"))))
-
-(add-initfn! find-and-replace-article-body)
+(defmethod do! :html [elem _ html]
+  (.html (js/jQuery elem) html))
 
 (html :class "no-js" :lang "en"
       (head
@@ -64,4 +59,4 @@
                   (text "published by ")
                   (a :href "#" (text "~{stub-page/published-by}"))
                   (text "17 minute read"))
-                 (div :class "article-body" :id "article-body")))))
+                 (div :class "article-body" :id "article-body" :html stub-page/article-body)))))
